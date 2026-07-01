@@ -2,7 +2,7 @@ import Banner from "@/components/home/Banner";
 import CounterSection from "@/components/home/CounterSection";
 
 
-import PackageSection from "./package/page";
+import PackageSection from "../package/page";
 import MembershipSection from "@/components/home/MembershipSection";
 import ChairmanSection from "@/components/home/ChairmanSection";
 import DealerFormSection from "@/components/home/DealerFormSection";
