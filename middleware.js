@@ -45,7 +45,7 @@ export function middleware(request) {
 
   // যদি রুট পাথ হয়, তবেই /en এ রিডাইরেক্ট করুন
   if (pathname === '/') {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/en', request.url));
   }
 
   return NextResponse.next();
