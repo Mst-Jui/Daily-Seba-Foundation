@@ -1,10 +1,29 @@
-import createMiddleware from "next-intl/middleware";
+// import createMiddleware from "next-intl/middleware";
 
-export default createMiddleware({
-  locales: ["en", "bn"],
-  defaultLocale: "en",
-});
+// export default createMiddleware({
+//   locales: ["en", "bn"],
+//   defaultLocale: "en",
+// });
 
+// export const config = {
+//   matcher: ["/((?!api|_next|.*\\..*).*)"],
+// };
+
+
+import { NextResponse } from 'next/server';
+
+export function middleware(request) {
+  const { pathname } = request.nextUrl;
+
+  // যদি রুট ইউআরএল হয়, তবে ডিফল্ট ল্যাঙ্গুয়েজ '/en'-এ রিডাইরেক্ট করুন
+  if (pathname === '/') {
+    return NextResponse.redirect(new URL('/en', request.url));
+  }
+
+  return NextResponse.next();
+}
+
+// শুধুমাত্র রুট পাথেই এই মিডলওয়্যার কাজ করবে
 export const config = {
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
+  matcher: '/',
 };
