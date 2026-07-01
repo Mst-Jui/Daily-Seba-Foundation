@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "about": "About",
+    "Our-team": "OurTeam",
+    "working-area": "Working-Area",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "Welcome to My Site",
+    "description": "This is the home page."
+  }
+}
