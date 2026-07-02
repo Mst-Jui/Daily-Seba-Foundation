@@ -8,15 +8,19 @@ export async function generateStaticParams() {
 }
 
 export default async function LocaleLayout({ children, params }) {
-  const { locale } = await params; // Next.js 15+/16 এ params এখন Promise, তাই await লাগবে
+  const { locale } = await params;
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-      <AppProvider>
-        <Navbar />
-        <main>{children}</main>
-      </AppProvider>
-    </NextIntlClientProvider>
+    <html lang={locale}>
+      <body>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AppProvider>
+            <Navbar />
+            <main>{children}</main>
+          </AppProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

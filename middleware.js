@@ -38,20 +38,37 @@
 
 
 
-import { NextResponse } from 'next/server';
+// import { NextResponse } from 'next/server';
 
-export function middleware(request) {
-  const { pathname } = request.nextUrl;
+// export function middleware(request) {
+//   const { pathname } = request.nextUrl;
 
-  // যদি রুট পাথ হয়, তবেই /en এ রিডাইরেক্ট করুন
-  if (pathname === '/') {
-    return NextResponse.redirect(new URL('/en', request.url));
-  }
+//   // যদি রুট পাথ হয়, তবেই /en এ রিডাইরেক্ট করুন
+//   if (pathname === '/') {
+//     return NextResponse.redirect(new URL('/en', request.url));
+//   }
 
-  return NextResponse.next();
-}
+//   return NextResponse.next();
+// }
 
-// matcher থেকে শুধু '/' রাখুন, কারণ '/en' আমাদের অ্যাপের ভেতর থেকে হ্যান্ডেল হচ্ছে
+// // matcher থেকে শুধু '/' রাখুন, কারণ '/en' আমাদের অ্যাপের ভেতর থেকে হ্যান্ডেল হচ্ছে
+// export const config = {
+//   matcher: ['/'],
+// };
+
+
+
+
+
+import createMiddleware from 'next-intl/middleware';
+
+export default createMiddleware({
+  // আপনার সাপোর্ট করা ল্যাঙ্গুয়েজগুলো এখানে দিন
+  locales: ['en', 'bn'],
+  defaultLocale: 'en'
+});
+
 export const config = {
-  matcher: ['/'],
+  // এটি রুট পাথ এবং অন্যান্য সমস্ত লোকাল রাউটকে হ্যান্ডেল করবে
+  matcher: ['/', '/(en|bn)/:path*']
 };
