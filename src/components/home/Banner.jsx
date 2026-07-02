@@ -11,25 +11,25 @@ const slidesConfig = [
     image:
       "https://dailysebafoundation.com/wp-content/uploads/2026/02/9-1.png",
     prefix: "banner1",
-    btnHref: "/dealer",
+    btnHref: "#dealer_form",
   },
   {
     image:
       "https://dailysebafoundation.com/wp-content/uploads/2026/02/8-1.png",
     prefix: "banner2",
-    btnHref: "/membership",
+    btnHref: "/membership/register",
   },
   {
     image:
       "https://dailysebafoundation.com/wp-content/uploads/2026/02/7-1.png",
     prefix: "banner3",
-    btnHref: "/dealer",
+    btnHref: "#dealer_form",
   },
   {
     image:
       "https://dailysebafoundation.com/wp-content/uploads/2026/02/5-1.png",
     prefix: "banner4",
-    btnHref: "/membership",
+    btnHref: "/membership/register",
   },
 ];
 
