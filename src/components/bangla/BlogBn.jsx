@@ -16,6 +16,8 @@ export const BlogBn = {
     blog_no_posts: "কোনো পোস্ট পাওয়া যায়নি।",
     blog_filter_all: "সব",
     blog_location: "স্থান",
+    blog_see_more: "আরও দেখুন",
+    blog_see_less: "কম দেখুন",
     blog_comment_heading: "মন্তব্য করুন",
     blog_comment_name: "আপনার নাম",
     blog_comment_email: "ইমেইল ঠিকানা",

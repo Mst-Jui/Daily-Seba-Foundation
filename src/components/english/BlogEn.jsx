@@ -16,6 +16,8 @@ export const BlogEn = {
     blog_no_posts: "No posts found.",
     blog_filter_all: "All",
     blog_location: "Location",
+    blog_see_more: "See more",
+    blog_see_less: "Show less",
     blog_comment_heading: "Leave a Comment",
     blog_comment_name: "Your Name",
     blog_comment_email: "Email Address",

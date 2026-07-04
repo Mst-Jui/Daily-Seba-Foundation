@@ -1,10 +1,9 @@
-// app/package/[id]/page.jsx
 "use client";
 import { useApp } from "@/context/AppContext";
 import { useRouter, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowLeft, ShoppingBag, CheckCircle2 } from "lucide-react";
-
+import Button from "@/components/reusable/Button"; // আপনার প্রিমিয়াম বাটন
 
 const validPackages = ["package1", "package2", "package3"];
 
@@ -18,153 +17,115 @@ export default function PackageDetailPage() {
   const itemList = Array.isArray(items) ? items : [];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="max-w-4xl mx-auto px-6 py-10 sm:py-16">
-        {/* ── Back Button ── */}
+    <div className="min-h-screen bg-slate-50 dark:bg-black py-10 sm:py-20 px-6 transition-colors duration-500">
+      <div className="max-w-4xl mx-auto">
+
+        {/* Back Button */}
         <motion.button
-          initial={{ opacity: 0, x: -10 }}
+          initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
           onClick={() => router.push("/")}
-          className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-green-500 transition-colors mb-8"
+          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-8 font-semibold"
         >
-          <ArrowLeft className="w-4 h-4" />
-          {t("package_back")}
+          <ArrowLeft className="w-5 h-5" /> {t("package_back")}
         </motion.button>
 
-        {/* ── Header ── */}
+        {/* Header Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 sm:p-10 mb-8"
+          className="relative bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-800 mb-8 overflow-hidden"
         >
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/30 flex items-center justify-center shrink-0">
-                <ShoppingBag className="w-7 h-7 text-green-500" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[100px]" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
+            <div className="flex items-center gap-5">
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-600 to-teal-400 flex items-center justify-center shadow-lg shadow-teal-500/20">
+                <ShoppingBag className="w-10 h-10 text-white" />
               </div>
               <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-                  {t(`${p}_name`)}
-                </h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  {t("package_project")}
-                </p>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{t(`${p}_name`)}</h1>
+                <p className="text-slate-500">{t("package_project")}</p>
               </div>
             </div>
-            <div className="text-left sm:text-right shrink-0">
-              <p className="text-xs text-gray-500 dark:text-gray-400">{t("package_total")}</p>
-              <p className="text-2xl sm:text-3xl font-bold text-green-500">
+            <div className="text-left sm:text-right">
+              <p className="text-slate-400 text-sm uppercase tracking-wider">{t("package_total")}</p>
+              <p className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-400">
                 {t(`${p}_total`)}
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* ── Item Table ── */}
+        {/* Table Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden mb-8"
+          transition={{ delay: 0.2 }}
+          className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl border border-slate-100 dark:border-slate-800 p-6 sm:p-8 mb-8"
         >
-          <div className="px-6 sm:px-8 pt-6 pb-2">
-            <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-green-500" />
-              {t("package_includes")}
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              {t("package_detail_subtitle")}
-            </p>
-          </div>
+          <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
+            <CheckCircle2 className="text-teal-500" /> {t("package_includes")}
+          </h2>
 
-          <table className="w-full text-sm mt-4">
-            <thead>
-              <tr className="text-xs text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-900/40 border-y border-gray-100 dark:border-gray-700">
-                <th className="text-left font-medium py-3 px-6 sm:px-8 w-12">
-                  {t("package_table_sl")}
-                </th>
-                <th className="text-left font-medium py-3 px-3">{t("package_table_item")}</th>
-                <th className="text-left font-medium py-3 px-3">{t("package_table_qty")}</th>
-                <th className="text-right font-medium py-3 px-6 sm:px-8">
-                  {t("package_table_price")}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {itemList.map((item, i) => (
-                <motion.tr
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: 0.25 + i * 0.04 }}
-                  className="border-b border-gray-50 dark:border-gray-700/50 last:border-0"
-                >
-                  <td className="py-3 px-6 sm:px-8 text-gray-400 dark:text-gray-500">
-                    {i + 1}
-                  </td>
-                  <td className="py-3 px-3 text-gray-800 dark:text-gray-200 font-medium">
-                    {item.name}
-                  </td>
-                  <td className="py-3 px-3 text-gray-500 dark:text-gray-400">{item.qty}</td>
-                  <td className="py-3 px-6 sm:px-8 text-right font-semibold text-gray-900 dark:text-white">
-                    {item.price}
-                  </td>
-                </motion.tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="text-slate-400 text-xs uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">
+                  <th className="pb-4 font-semibold">{t("package_table_sl")}</th>
+                  <th className="pb-4 font-semibold">{t("package_table_item")}</th>
+                  <th className="pb-4 font-semibold">{t("package_table_qty")}</th>
+                  <th className="pb-4 font-semibold text-right">{t("package_table_price")}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                {itemList.map((item, i) => (
+                  <motion.tr
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + i * 0.05 }}
+                    className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                  >
+                    <td className="py-4 text-slate-400 font-medium">{i + 1}</td>
+                    <td className="py-4 font-medium text-slate-700 dark:text-slate-200">{item.name}</td>
+                    <td className="py-4 text-slate-500">{item.qty}</td>
+                    <td className="py-4 text-right font-bold text-slate-900 dark:text-white">{item.price}</td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </motion.div>
 
-        {/* ── Discount Summary ── */}
+        {/* Discount Summary Cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 sm:p-8 mb-8"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="flex flex-col gap-1 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                {t("package_discount_phase1")}
-              </span>
-              <span className="text-base font-bold text-green-600">
-                {t(`${p}_discount1`)}
-              </span>
-            </div>
-
-            {t(`${p}_discount2`) !== `${p}_discount2` && (
-              <div className="flex flex-col gap-1 p-4 rounded-xl bg-gray-50 dark:bg-gray-900/40">
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {t("package_discount_phase2")}
-                </span>
-                <span className="text-base font-bold text-green-600">
-                  {t(`${p}_discount2`)}
-                </span>
-              </div>
-            )}
-
-            {t(`${p}_savings`) !== `${p}_savings` && (
-              <div className="flex flex-col gap-1 p-4 rounded-xl bg-green-500">
-                <span className="text-xs text-green-50">{t("package_your_savings")}</span>
-                <span className="text-base font-bold text-white">
-                  {t(`${p}_savings`)}
-                </span>
-              </div>
-            )}
+          <div className="flex flex-col gap-1 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{t("package_discount_phase1")}</span>
+            <span className="text-lg font-bold text-teal-400">{t(`${p}_discount1`)}</span>
           </div>
+
+          {t(`${p}_discount2`) !== `${p}_discount2` && (
+            <div className="flex flex-col gap-1 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm">
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{t("package_discount_phase2")}</span>
+              <span className="text-lg font-bold text-teal-400">{t(`${p}_discount2`)}</span>
+            </div>
+          )}
+
+          {t(`${p}_savings`) !== `${p}_savings` && (
+            <div className="flex flex-col gap-1 p-6 rounded-2xl bg-gradient-to-br from-blue-600 to-teal-400 shadow-lg shadow-teal-500/20">
+              <span className="text-xs text-white/90 font-medium">{t("package_your_savings")}</span>
+              <span className="text-lg font-bold text-white">{t(`${p}_savings`)}</span>
+            </div>
+          )}
         </motion.div>
 
-        {/* ── CTA ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex justify-center"
-        >
-        
-        </motion.div>
+        {/* CTA Button */}
+
       </div>
     </div>
   );

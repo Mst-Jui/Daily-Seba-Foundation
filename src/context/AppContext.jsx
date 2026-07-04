@@ -1,6 +1,5 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
-
 import { BannerEn } from "@/components/english/BannerEn";
 import { ProductPackageEn } from "@/components/english/ProductPackageEn";
 import { MembershipEn } from "@/components/english/MembershipEn";
@@ -9,10 +8,8 @@ import { DealerFormEn } from "@/components/english/DealerFormEn";
 import { FaqEn } from "@/components/english/FaqEn";
 import { FooterEn } from "@/components/english/FooterEn";
 import { AboutEn } from "@/components/english/AboutEn";
-// import { ChairmanAboutEn } from "@/components/english/ChairmanAboutEn";
 import { HomeExtraEn } from "@/components/english/HomeExtraEn";
 import { TeamEn } from "@/components/english/TeamEn";
-
 import { BannerBn } from "@/components/bangla/BannerBn";
 import { ProductPackageBn } from "@/components/bangla/ProductPackageBn";
 import { MembershipBn } from "@/components/bangla/MembershipBn";
@@ -21,7 +18,6 @@ import { DealerFormBn } from "@/components/bangla/DealerFormBn";
 import { FaqBn } from "@/components/bangla/FaqBn";
 import { FooterBn } from "@/components/bangla/FooterBn";
 import { AboutBn } from "@/components/bangla/AboutBn";
-// import { ChairmanAboutBn } from "@/components/bangla/ChairmanAboutBn";
 import { HomeExtraBn } from "@/components/bangla/HomeExtraBn";
 import { TeamBn } from "@/components/bangla/TeamBn";
 import { ImpactGalleryEn } from "@/components/english/ImpactEn";
@@ -45,13 +41,12 @@ export const translations = {
     ...FaqEn.en,
     ...FooterEn.en,
     ...AboutEn.en,
-    // ...ChairmanAboutEn.en,
     ...HomeExtraEn.en,
     ...TeamEn.en,
     ...ImpactGalleryEn.en,
     ...ContactEn.en,
     ...WorkingAreaEn.en,
-    ...BlogEn.en, 
+    ...BlogEn.en,
   },
   bn: {
     ...BannerBn.bn,
@@ -62,27 +57,52 @@ export const translations = {
     ...FaqBn.bn,
     ...FooterBn.bn,
     ...AboutBn.bn,
-    // ...ChairmanAboutBn.bn,
     ...HomeExtraBn.bn,
     ...TeamBn.bn,
     ...ImpactGalleryBn.bn,
     ...ContactBn.bn,
     ...WorkingAreaBn.bn,
-    ...BlogBn.en,
+    ...BlogBn.bn, // ← আগে ভুলবশত BlogBn.en ছিল, এটাই bangla না আসার আসল কারণ
   },
 };
 
+const THEME_KEY = "dsf_theme";
+const LANG_KEY = "dsf_lang";
+
 export function AppProvider({ children }) {
   const [theme, setTheme] = useState("light");
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("bn");
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      const savedLang = localStorage.getItem(LANG_KEY);
+      if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
+      if (savedLang === "en" || savedLang === "bn") setLang(savedLang);
+    } catch (e) {}
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
+    if (hydrated) {
+      try {
+        localStorage.setItem(THEME_KEY, theme);
+      } catch (e) {}
+    }
+  }, [theme, hydrated]);
 
-  const toggleTheme = () =>
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  useEffect(() => {
+    if (hydrated) {
+      try {
+        localStorage.setItem(LANG_KEY, lang);
+      } catch (e) {}
+    }
+  }, [lang, hydrated]);
+
+  const toggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
   const toggleLang = (selected) => setLang(selected);
   const t = (key) => translations[lang]?.[key] || key;
 

@@ -1,27 +1,31 @@
-// components/team/TeamHero.jsx
 "use client";
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { useApp } from "@/context/AppContext";
 
-function TeamHeroBackground() {
+export default function WorkingAreaBackground() {
   const stars = useMemo(
-    () => Array.from({ length: 38 }, (_, i) => ({
+    () => Array.from({ length: 45 }, (_, i) => ({
       id: i, top: Math.random() * 100, left: Math.random() * 100,
       size: Math.random() * 2 + 1, delay: Math.random() * 4, duration: Math.random() * 2 + 2,
     })), []
   );
   const dots = useMemo(
-    () => Array.from({ length: 16 }, (_, i) => ({
+    () => Array.from({ length: 20 }, (_, i) => ({
       id: i, top: Math.random() * 90 + 5, left: Math.random() * 90 + 5,
       size: Math.random() * 3 + 2, delay: Math.random() * 3,
     })), []
   );
   const boxes = useMemo(
-    () => Array.from({ length: 5 }, (_, i) => ({
+    () => Array.from({ length: 7 }, (_, i) => ({
       id: i, top: Math.random() * 85 + 5, left: Math.random() * 92 + 4,
       size: Math.random() * 16 + 12, delay: Math.random() * 5, duration: Math.random() * 6 + 8,
       rotate: Math.random() * 40 - 20,
+    })), []
+  );
+  const circles = useMemo(
+    () => Array.from({ length: 6 }, (_, i) => ({
+      id: i, top: Math.random() * 85 + 5, left: Math.random() * 92 + 4,
+      size: Math.random() * 10 + 6, delay: Math.random() * 5, duration: Math.random() * 5 + 6,
     })), []
   );
 
@@ -31,22 +35,22 @@ function TeamHeroBackground() {
 
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] sm:w-[600px] sm:h-[600px] rounded-full opacity-40"
+        transition={{ duration: 65, repeat: Infinity, ease: "linear" }}
+        className="absolute -top-1/2 left-1/2 -translate-x-1/2 w-[550px] h-[550px] sm:w-[750px] sm:h-[750px] rounded-full opacity-40"
         style={{ background: "conic-gradient(from 0deg, rgba(37,99,235,0.25), rgba(45,212,191,0.2), transparent, rgba(37,99,235,0.2), transparent)" }}
       />
 
       <motion.div
-        animate={{ x: [0, 20, 0], y: [0, -15, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-blue-500/10 rounded-full blur-[120px]"
+        animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[350px] sm:h-[400px] bg-blue-500/15 rounded-full blur-[100px]"
       />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.7 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute top-8 sm:top-10 right-8 sm:right-16 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-teal-100 to-teal-300 shadow-[0_0_40px_14px_rgba(45,212,191,0.3)]"
+        className="absolute top-10 sm:top-14 left-8 sm:left-16 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-teal-100 to-teal-300 shadow-[0_0_40px_14px_rgba(45,212,191,0.3)]"
       >
         <div className="absolute top-1.5 left-2 w-1.5 h-1.5 rounded-full bg-teal-400/40" />
         <div className="absolute bottom-2 right-2.5 w-2 h-2 rounded-full bg-teal-400/30" />
@@ -68,6 +72,15 @@ function TeamHeroBackground() {
         />
       ))}
 
+      {circles.map((c) => (
+        <motion.div key={c.id}
+          animate={{ y: [0, -16, 0], x: [0, 8, 0] }}
+          transition={{ duration: c.duration, delay: c.delay, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute rounded-full border border-teal-400/30 hidden sm:block"
+          style={{ top: `${c.top}%`, left: `${c.left}%`, width: c.size, height: c.size }}
+        />
+      ))}
+
       {boxes.map((b) => (
         <motion.div key={b.id}
           animate={{ y: [0, -18, 0], rotate: [b.rotate, b.rotate + 15, b.rotate] }}
@@ -77,33 +90,5 @@ function TeamHeroBackground() {
         />
       ))}
     </div>
-  );
-}
-
-export default function TeamHero() {
-  const { t } = useApp();
-  return (
-    <section className="relative w-full pt-28 pb-12 sm:pt-36 sm:pb-16 md:pt-44 md:pb-20 overflow-hidden">
-      <TeamHeroBackground />
-
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-snug mb-5"
-        >
-          {t("team_hero_heading")}
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed max-w-xl mx-auto"
-        >
-          {t("team_hero_subtitle")}
-        </motion.p>
-      </div>
-    </section>
   );
 }
